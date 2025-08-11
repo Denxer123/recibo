@@ -4,94 +4,143 @@
   <meta charset="UTF-8">
   <title>Recibo</title>
   <style>
-    @page {
-      size: A4 portrait;
-      margin: 20px;
-    }
     body {
       font-family: Arial, sans-serif;
       font-size: 12px;
-      margin: 0;
-      padding: 10px;
+      margin: 20px;
     }
     .company-name {
       text-align: center;
       font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 2px;
+      font-size: 18px;
     }
     .company-description {
       text-align: center;
-      font-size: 11px;
-      margin-bottom: 4px;
+      font-size: 12px;
     }
     .company-phones {
       text-align: center;
-      font-size: 10px;
+      font-size: 11px;
+      margin-bottom: 10px;
     }
-    .info-table {
+    .info-table, .equipments-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
       border: 1px solid black;
     }
-    .info-table td {
+    .info-table td, .equipments-table td, .equipments-table th {
+      border: 1px solid black;
       padding: 5px;
-      vertical-align: top;
     }
-    .left-col {
-      width: 70%;
-      border-right: 1px solid black;
+    .equipments-table th {
+      background: #eee;
     }
-    .right-col {
-      width: 30%;
+    .totals {
+      text-align: right;
+      margin-top: 10px;
+    }
+    .clauses {
+      margin-top: 15px;
+      font-size: 10px;
     }
   </style>
 </head>
 <body>
-  <!-- Empresa -->
-  <div class="company-name" id="companyName"></div>
-  <div class="company-description" id="companyDescription"></div>
-  <div class="company-phones" id="companyPhones"></div>
 
-  <!-- Cliente / Técnico -->
+  <!-- Datos de la empresa -->
+  <div class="company-name" id="company_name"></div>
+  <div class="company-description" id="company_description"></div>
+  <div class="company-phones" id="company_phones"></div>
+
+  <!-- Datos cliente y ticket -->
   <table class="info-table">
     <tr>
-      <td class="left-col">
-        <strong>Cliente:</strong> <span id="clientName"></span> &nbsp;&nbsp;&nbsp;
-        <strong>Fecha:</strong> <span id="receiptDate"></span><br>
-        <strong>Celular:</strong> <span id="phone1"></span><span id="phone2"></span>
+      <td>
+        <strong>Cliente:</strong> <span id="client_name"></span><br>
+        <strong>Fecha:</strong> <span id="receipt_date"></span><br>
+        <strong>Celular:</strong> <span id="phone_1"></span><span id="phone_2"></span>
       </td>
-      <td class="right-col">
-        <strong>Técnico Responsable:</strong> <span id="responsibleTechnician"></span><br>
-        <strong>N° Nota de Venta:</strong> <span id="ticket"></span>
+      <td>
+        <strong>Técnico Responsable:</strong> <span id="responsible"></span><br>
+        <strong>N° Nota de Venta:</strong> <span id="num_ticket"></span>
       </td>
     </tr>
   </table>
 
+  <!-- Tabla de equipos -->
+  <table class="equipments-table">
+    <thead>
+      <tr>
+        <th>Equipo</th>
+        <th>Reparación</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody id="equipments_body"></tbody>
+  </table>
+
+  <!-- Totales -->
+  <div class="totals">
+    <strong>Total:</strong> <span id="total"></span><br>
+    <strong>Adelanto:</strong> <span id="advance"></span><br>
+    <strong>Resta:</strong> <span id="resta"></span>
+  </div>
+
+  <!-- Cláusulas -->
+  <div class="clauses" id="clauses"></div>
+
   <script>
-    // Leer parámetros de la URL
-    const p = new URLSearchParams(window.location.search);
+    // Capturar parámetros desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
 
-    // Datos de la empresa
-    document.getElementById('companyName').textContent = p.get('company_name') || '';
-    document.getElementById('companyDescription').textContent = p.get('company_description') || '';
-    document.getElementById('companyPhones').textContent = p.get('company_phones') || '';
+    // Datos de empresa
+    document.getElementById("company_name").textContent = urlParams.get("company_name");
+    document.getElementById("company_description").textContent = urlParams.get("company_description");
+    document.getElementById("company_phones").textContent = urlParams.get("company_phones");
 
-    // Datos del cliente
-    document.getElementById('clientName').textContent = p.get('client_name') || '';
-    document.getElementById('receiptDate').textContent = p.get('date') || '';
-    document.getElementById('phone1').textContent = p.get('phone1') || '';
-    if (p.get('phone2')) {
-      document.getElementById('phone2').textContent = ' / ' + p.get('phone2');
+    // Datos cliente y ticket
+    document.getElementById("client_name").textContent = urlParams.get("client_name");
+    document.getElementById("receipt_date").textContent = urlParams.get("receipt_date");
+    document.getElementById("phone_1").textContent = urlParams.get("phone_1");
+    document.getElementById("phone_2").textContent = urlParams.get("phone_2") ? " / " + urlParams.get("phone_2") : "";
+    document.getElementById("responsible").textContent = urlParams.get("responsible");
+    document.getElementById("num_ticket").textContent = urlParams.get("num_ticket");
+
+    // Totales
+    const currency = urlParams.get("currency");
+    const total = parseFloat(urlParams.get("total") || 0);
+    const advance = parseFloat(urlParams.get("advance") || 0);
+    const resta = total - advance;
+
+    document.getElementById("total").textContent = currency + total.toFixed(2);
+    document.getElementById("advance").textContent = currency + advance.toFixed(2);
+    document.getElementById("resta").textContent = currency + resta.toFixed(2);
+
+    // Cláusulas
+    document.getElementById("clauses").textContent = urlParams.get("clauses");
+
+    // Equipos (en JSON)
+    const equipmentsJSON = urlParams.get("equipments");
+    if (equipmentsJSON) {
+      try {
+        const equipments = JSON.parse(equipmentsJSON);
+        const tbody = document.getElementById("equipments_body");
+        equipments.forEach(eq => {
+          eq.repairs.forEach(r => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${eq.name}</td>
+              <td>${r.repair}</td>
+              <td>${currency}${parseFloat(r.price).toFixed(2)}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+      } catch (e) {
+        console.error("Error parseando equipos:", e);
+      }
     }
-
-    // Datos del técnico / ticket
-    document.getElementById('responsibleTechnician').textContent = p.get('responsible_technician') || '';
-    document.getElementById('ticket').textContent = p.get('ticket') || '';
-
-    // Imprimir automáticamente
-    window.onload = () => window.print();
   </script>
 </body>
 </html>
