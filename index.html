@@ -4,40 +4,94 @@
   <meta charset="UTF-8">
   <title>Recibo</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    @page {
+      size: A4 portrait;
       margin: 20px;
     }
-    .title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      margin: 0;
+      padding: 10px;
     }
-    .info {
-      font-size: 14px;
-      margin-bottom: 5px;
+    .company-name {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+    .company-description {
+      text-align: center;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+    .company-phones {
+      text-align: center;
+      font-size: 10px;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      border: 1px solid black;
+    }
+    .info-table td {
+      padding: 5px;
+      vertical-align: top;
+    }
+    .left-col {
+      width: 70%;
+      border-right: 1px solid black;
+    }
+    .right-col {
+      width: 30%;
     }
   </style>
 </head>
 <body>
-  <div class="title">Recibo</div>
-  <div class="info"><strong>Cliente:</strong> <span id="clientName"></span></div>
-  <div class="info"><strong>Teléfono:</strong> <span id="phone"></span></div>
-  <div class="info"><strong>Fecha:</strong> <span id="date"></span></div>
-  <div class="info"><strong>N° Ticket:</strong> <span id="ticket"></span></div>
+  <!-- Empresa -->
+  <div class="company-name" id="companyName"></div>
+  <div class="company-description" id="companyDescription"></div>
+  <div class="company-phones" id="companyPhones"></div>
+
+  <!-- Cliente / Técnico -->
+  <table class="info-table">
+    <tr>
+      <td class="left-col">
+        <strong>Cliente:</strong> <span id="clientName"></span> &nbsp;&nbsp;&nbsp;
+        <strong>Fecha:</strong> <span id="receiptDate"></span><br>
+        <strong>Celular:</strong> <span id="phone1"></span><span id="phone2"></span>
+      </td>
+      <td class="right-col">
+        <strong>Técnico Responsable:</strong> <span id="responsibleTechnician"></span><br>
+        <strong>N° Nota de Venta:</strong> <span id="ticket"></span>
+      </td>
+    </tr>
+  </table>
 
   <script>
-    // Obtener parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById('clientName').textContent = params.get('client_name') || '';
-    document.getElementById('phone').textContent = params.get('phone') || '';
-    document.getElementById('date').textContent = params.get('date') || '';
-    document.getElementById('ticket').textContent = params.get('ticket') || '';
+    // Leer parámetros de la URL
+    const p = new URLSearchParams(window.location.search);
 
-    // Abrir diálogo de impresión automáticamente
-    window.onload = function() {
-      window.print();
-    };
+    // Datos de la empresa
+    document.getElementById('companyName').textContent = p.get('company_name') || '';
+    document.getElementById('companyDescription').textContent = p.get('company_description') || '';
+    document.getElementById('companyPhones').textContent = p.get('company_phones') || '';
+
+    // Datos del cliente
+    document.getElementById('clientName').textContent = p.get('client_name') || '';
+    document.getElementById('receiptDate').textContent = p.get('date') || '';
+    document.getElementById('phone1').textContent = p.get('phone1') || '';
+    if (p.get('phone2')) {
+      document.getElementById('phone2').textContent = ' / ' + p.get('phone2');
+    }
+
+    // Datos del técnico / ticket
+    document.getElementById('responsibleTechnician').textContent = p.get('responsible_technician') || '';
+    document.getElementById('ticket').textContent = p.get('ticket') || '';
+
+    // Imprimir automáticamente
+    window.onload = () => window.print();
   </script>
 </body>
 </html>
