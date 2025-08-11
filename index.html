@@ -7,40 +7,34 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .info {
       font-size: 14px;
-    }
-    .receipt {
-      border: 1px solid #000;
-      padding: 15px;
-      width: 300px;
-    }
-    .receipt h2 {
-      text-align: center;
-      margin: 0 0 10px 0;
+      margin-bottom: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="receipt">
-    <h2>Recibo</h2>
-    <p><strong>Cliente:</strong> <span id="client_name"></span></p>
-    <p><strong>Teléfono:</strong> <span id="phone"></span></p>
-    <p><strong>Fecha:</strong> <span id="date"></span></p>
-  </div>
+  <div class="title">Recibo</div>
+  <div class="info"><strong>Cliente:</strong> <span id="clientName"></span></div>
+  <div class="info"><strong>Teléfono:</strong> <span id="phone"></span></div>
+  <div class="info"><strong>Fecha:</strong> <span id="date"></span></div>
+  <div class="info"><strong>N° Ticket:</strong> <span id="ticket"></span></div>
 
   <script>
-    // Función para obtener parámetros de la URL
-    function getParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name) || '';
-    }
+    // Obtener parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('clientName').textContent = params.get('client_name') || '';
+    document.getElementById('phone').textContent = params.get('phone') || '';
+    document.getElementById('date').textContent = params.get('date') || '';
+    document.getElementById('ticket').textContent = params.get('ticket') || '';
 
-    // Insertar valores en el HTML
-    document.getElementById('client_name').textContent = getParam('client_name');
-    document.getElementById('phone').textContent = getParam('phone');
-    document.getElementById('date').textContent = getParam('date');
-
-    // Imprimir automáticamente
+    // Abrir diálogo de impresión automáticamente
     window.onload = function() {
       window.print();
     };
