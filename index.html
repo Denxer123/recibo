@@ -5,49 +5,67 @@
   <title>Equipos a Reparar</title>
 </head>
 <body>
-  <h2>EEEEr</h2>
-  <table border="1" cellpadding="5" cellspacing="0">
+  <table border="1" cellspacing="0" cellpadding="5">
     <thead>
       <tr>
         <th>Equipo</th>
         <th>Reparación</th>
         <th>Precio</th>
+        <th>Observaciones</th>
       </tr>
     </thead>
-    <tbody id="equipments-table">
+    <tbody id="equipmentsTable">
     </tbody>
   </table>
 
   <script>
+    // Obtener parámetros de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const equipmentsParam = urlParams.get('equipments');
+    const equipmentsParam = urlParams.get("equipments");
 
     if (equipmentsParam) {
       try {
         const equipments = JSON.parse(decodeURIComponent(equipmentsParam));
-        const tableBody = document.getElementById('equipments-table');
+        const tbody = document.getElementById("equipmentsTable");
 
-        equipments.forEach(equip => {
-          equip.repairs.forEach(repair => {
-            const row = document.createElement('tr');
+        equipments.forEach(equipment => {
+          if (equipment.repairs && equipment.repairs.length > 0) {
+            equipment.repairs.forEach((repair, index) => {
+              const tr = document.createElement("tr");
 
-            const deviceCell = document.createElement('td');
-            deviceCell.textContent = equip.device || '';
-            row.appendChild(deviceCell);
+              // Columna equipo (solo en la primera reparación)
+              const tdDevice = document.createElement("td");
+              if (index === 0) {
+                tdDevice.textContent = equipment.device || "";
+                tdDevice.rowSpan = equipment.repairs.length;
+              }
 
-            const repairCell = document.createElement('td');
-            repairCell.textContent = repair.repairDetail || '';
-            row.appendChild(repairCell);
+              // Columna reparación
+              const tdRepair = document.createElement("td");
+              tdRepair.textContent = repair.repairDetail || "";
 
-            const priceCell = document.createElement('td');
-            priceCell.textContent = repair.price !== undefined ? repair.price : '';
-            row.appendChild(priceCell);
+              // Columna precio
+              const tdPrice = document.createElement("td");
+              tdPrice.textContent = repair.price != null ? repair.price : "";
 
-            tableBody.appendChild(row);
-          });
+              // Columna observaciones (solo en la primera reparación)
+              const tdObs = document.createElement("td");
+              if (index === 0) {
+                tdObs.textContent = equipment.observations || "";
+                tdObs.rowSpan = equipment.repairs.length;
+              }
+
+              if (index === 0) tr.appendChild(tdDevice);
+              tr.appendChild(tdRepair);
+              tr.appendChild(tdPrice);
+              if (index === 0) tr.appendChild(tdObs);
+
+              tbody.appendChild(tr);
+            });
+          }
         });
-      } catch (error) {
-        console.error('Error al procesar equipos:', error);
+      } catch (e) {
+        console.error("Error procesando los datos:", e);
       }
     }
   </script>
