@@ -2,59 +2,77 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>EQUIPOS XXX</title>
+  <title>Recibo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 6px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .device-row {
+      background-color: #d9edf7;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h2>XXXXXXXXXX</h2>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Equipo</th>
-        <th>Reparación</th>
-        <th>Precio</th>
-      </tr>
-    </thead>
-    <tbody id="equipos-body"></tbody>
-  </table>
 
-  <script>
-    // Leer parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
-    const equipmentsParam = params.get("equipments");
+<h2>Equipos y Reparaciones</h2>
 
-    if (equipmentsParam) {
-      try {
-        // Decodificar y parsear JSON
-        const equipments = JSON.parse(decodeURIComponent(equipmentsParam));
-        
-        const tbody = document.getElementById("equipos-body");
-        
-        equipments.forEach(equip => {
-          equip.repairs.forEach(repair => {
-            const row = document.createElement("tr");
+<div id="equipments-container"></div>
 
-            const deviceCell = document.createElement("td");
-            deviceCell.textContent = equip.device;
-            row.appendChild(deviceCell);
+<script>
+  // Obtener el parámetro "equipments" de la URL y decodificarlo
+  const params = new URLSearchParams(window.location.search);
+  const equipmentsParam = params.get("equipments");
 
-            const repairCell = document.createElement("td");
-            repairCell.textContent = repair.repairDetail;
-            row.appendChild(repairCell);
+  if (equipmentsParam) {
+    try {
+      const equipments = JSON.parse(decodeURIComponent(equipmentsParam));
+      let html = '<table><thead><tr><th>Equipo</th><th>Reparación</th><th>Precio</th></tr></thead><tbody>';
 
-            const priceCell = document.createElement("td");
-            priceCell.textContent = repair.price;
-            row.appendChild(priceCell);
-
-            tbody.appendChild(row);
+      equipments.forEach(equipment => {
+        const repairs = equipment.repairs || [];
+        if (repairs.length > 0) {
+          repairs.forEach((repair, index) => {
+            html += `<tr>
+              ${index === 0 ? `<td rowspan="${repairs.length}" class="device-row">${equipment.device}</td>` : ""}
+              <td>${repair.repairDetail || ""}</td>
+              <td>${repair.price !== undefined ? repair.price : ""}</td>
+            </tr>`;
           });
-        });
+        } else {
+          html += `<tr>
+            <td class="device-row">${equipment.device}</td>
+            <td colspan="2">Sin reparaciones</td>
+          </tr>`;
+        }
+      });
 
-      } catch (error) {
-        console.error("Error procesando los equipos:", error);
-      }
-    } else {
-      document.getElementById("equipos-body").innerHTML = "<tr><td colspan='3'>No se enviaron equipos</td></tr>";
+      html += '</tbody></table>';
+      document.getElementById("equipments-container").innerHTML = html;
+
+    } catch (error) {
+      document.getElementById("equipments-container").innerHTML = "<p style='color:red;'>Error al procesar los datos.</p>";
+      console.error("Error:", error);
     }
-  </script>
+  } else {
+    document.getElementById("equipments-container").innerHTML = "<p>No se recibieron datos de equipos.</p>";
+  }
+</script>
+
 </body>
 </html>
