@@ -2,72 +2,106 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Equipos a Reparar</title>
+  <title>Recibo</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 4px;
+      text-align: left;
+      vertical-align: top;
+    }
+  </style>
 </head>
 <body>
-  <table border="1" cellspacing="0" cellpadding="5">
-    <thead>
-      <tr>
-        <th>Equipo</th>
-        <th>Reparación</th>
-        <th>Precio</th>
-        <th>Observaciones</th>
-      </tr>
-    </thead>
-    <tbody id="equipmentsTable">
-    </tbody>
-  </table>
 
-  <script>
-    // Obtener parámetros de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const equipmentsParam = urlParams.get("equipments");
+<h2>Equipos y Reparaciones</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Equipo</th>
+      <th>Reparación</th>
+      <th>Precio</th>
+      <th>Observaciones</th>
+    </tr>
+  </thead>
+  <tbody id="equipmentsTable"></tbody>
+</table>
 
-    if (equipmentsParam) {
-      try {
-        const equipments = JSON.parse(decodeURIComponent(equipmentsParam));
-        const tbody = document.getElementById("equipmentsTable");
+<script>
+  // Obtener parámetros desde la URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const equipmentsData = urlParams.get("equipments");
 
-        equipments.forEach(equipment => {
-          if (equipment.repairs && equipment.repairs.length > 0) {
-            equipment.repairs.forEach((repair, index) => {
-              const tr = document.createElement("tr");
+  if (equipmentsData) {
+    try {
+      const equipments = JSON.parse(decodeURIComponent(equipmentsData));
+      const tableBody = document.getElementById("equipmentsTable");
 
-              // Columna equipo (solo en la primera reparación)
-              const tdDevice = document.createElement("td");
-              if (index === 0) {
-                tdDevice.textContent = equipment.device || "";
-                tdDevice.rowSpan = equipment.repairs.length;
-              }
+      equipments.forEach(eq => {
+        const repairCount = eq.repairs.length || 1;
+        const rowEquipo = document.createElement("tr");
 
-              // Columna reparación
-              const tdRepair = document.createElement("td");
-              tdRepair.textContent = repair.repairDetail || "";
+        // Columna de equipo (una sola celda para todo el grupo)
+        const tdEquipo = document.createElement("td");
+        tdEquipo.textContent = eq.device || "";
+        tdEquipo.rowSpan = repairCount;
+        rowEquipo.appendChild(tdEquipo);
 
-              // Columna precio
-              const tdPrice = document.createElement("td");
-              tdPrice.textContent = repair.price != null ? repair.price : "";
+        // Primera reparación
+        if (eq.repairs.length > 0) {
+          const firstRepair = eq.repairs[0];
+          const tdRepair = document.createElement("td");
+          tdRepair.textContent = firstRepair.repairDetail || "";
+          rowEquipo.appendChild(tdRepair);
 
-              // Columna observaciones (solo en la primera reparación)
-              const tdObs = document.createElement("td");
-              if (index === 0) {
-                tdObs.textContent = equipment.observations || "";
-                tdObs.rowSpan = equipment.repairs.length;
-              }
+          const tdPrice = document.createElement("td");
+          tdPrice.textContent = firstRepair.price || "";
+          rowEquipo.appendChild(tdPrice);
+        } else {
+          const tdEmptyRepair = document.createElement("td");
+          tdEmptyRepair.textContent = "";
+          rowEquipo.appendChild(tdEmptyRepair);
 
-              if (index === 0) tr.appendChild(tdDevice);
-              tr.appendChild(tdRepair);
-              tr.appendChild(tdPrice);
-              if (index === 0) tr.appendChild(tdObs);
+          const tdEmptyPrice = document.createElement("td");
+          tdEmptyPrice.textContent = "";
+          rowEquipo.appendChild(tdEmptyPrice);
+        }
 
-              tbody.appendChild(tr);
-            });
-          }
-        });
-      } catch (e) {
-        console.error("Error procesando los datos:", e);
-      }
+        // Columna Observaciones (una sola celda para todo el grupo)
+        const tdObs = document.createElement("td");
+        tdObs.textContent = eq.observations || "";
+        tdObs.rowSpan = repairCount;
+        rowEquipo.appendChild(tdObs);
+
+        tableBody.appendChild(rowEquipo);
+
+        // Resto de reparaciones
+        for (let i = 1; i < eq.repairs.length; i++) {
+          const r = eq.repairs[i];
+          const rowRepair = document.createElement("tr");
+
+          const tdRepair = document.createElement("td");
+          tdRepair.textContent = r.repairDetail || "";
+          rowRepair.appendChild(tdRepair);
+
+          const tdPrice = document.createElement("td");
+          tdPrice.textContent = r.price || "";
+          rowRepair.appendChild(tdPrice);
+
+          tableBody.appendChild(rowRepair);
+        }
+      });
+    } catch (err) {
+      console.error("Error al procesar los datos:", err);
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>
