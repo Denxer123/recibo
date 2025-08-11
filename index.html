@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <base target="_top">
     <style>
       @page {
         size: A4 landscape;
@@ -48,22 +48,22 @@
       .equipos-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 15px;
+        margin-top: 10px;
         border: 1px solid black;
       }
-      .equipos-table td, .equipos-table th {
+      .equipos-table th, .equipos-table td {
         border: 1px solid black;
         padding: 5px;
       }
       .equipos-table th {
         text-align: center;
       }
-      .center-vertical {
-        vertical-align: middle;
-        text-align: center;
-      }
-      .left-align {
+      .equipo-cell {
         text-align: left;
+        vertical-align: middle;
+      }
+      .repair-cell, .price-cell, .obs-cell {
+        text-align: center;
         vertical-align: middle;
       }
     </style>
@@ -88,23 +88,27 @@
     </table>
 
     <table class="equipos-table">
-      <tr>
-        <th>Equipo</th>
-        <th>Reparaciones</th>
-        <th>Precio</th>
-        <th>Observaciones</th>
-      </tr>
-      ${equipments.map(eq => {
-        const rowSpan = eq.repairs.length;
-        return eq.repairs.map((rep, idx) => `
-          <tr>
-            ${idx === 0 ? `<td class="left-align" rowspan="${rowSpan}">${eq.device}</td>` : ''}
-            <td class="center-vertical">${rep.repairDetail}</td>
-            <td class="center-vertical">${company.CurrencySymbol}${rep.price}</td>
-            ${idx === 0 ? `<td class="center-vertical" rowspan="${rowSpan}">${eq.observations || ''}</td>` : ''}
-          </tr>
-        `).join('');
-      }).join('')}
+      <thead>
+        <tr>
+          <th>Equipo</th>
+          <th>Reparación</th>
+          <th>Precio</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${repairs.map(equipo => {
+          const rowspan = equipo.reparaciones.length;
+          return equipo.reparaciones.map((rep, index) => `
+            <tr>
+              ${index === 0 ? `<td class="equipo-cell" rowspan="${rowspan}">${equipo.nombre}</td>` : ''}
+              <td class="repair-cell">${rep.detalle}</td>
+              <td class="price-cell">${company.CurrencySymbol}${rep.precio}</td>
+              ${index === 0 ? `<td class="obs-cell" rowspan="${rowspan}">${equipo.observaciones || ''}</td>` : ''}
+            </tr>
+          `).join('');
+        }).join('')}
+      </tbody>
     </table>
   </body>
 </html>
