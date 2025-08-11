@@ -1,115 +1,77 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-    <style>
-      @page {
-        size: A4 landscape;
-        margin: 20px;
-      }
-      body {
-        font-family: Arial, sans-serif;
-        font-size: 12px;
-        margin: 0;
-        padding: 10px;
-      }
-      .company-name {
-        text-align: center;
-        font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 2px;
-      }
-      .company-description {
-        text-align: center;
-        font-size: 11px;
-        margin-bottom: 4px;
-      }
-      .company-phones {
-        text-align: center;
-        font-size: 10px;
-      }
-      .info-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        border: 1px solid black;
-      }
-      .info-table td {
-        padding: 5px;
-        vertical-align: top;
-      }
-      .left-col {
-        width: 70%;
-        border-right: 1px solid black;
-      }
-      .right-col {
-        width: 30%;
-      }
-      .equipos-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-        border: 1px solid black;
-      }
-      .equipos-table th, .equipos-table td {
-        border: 1px solid black;
-        padding: 5px;
-      }
-      .equipos-table th {
-        text-align: center;
-      }
-      .equipo-cell {
-        text-align: left;
-        vertical-align: middle;
-      }
-      .repair-cell, .price-cell, .obs-cell {
-        text-align: center;
-        vertical-align: middle;
-      }
-    </style>
-  </head>
-  <body>
-    tttttttttttttt
-    <div class="company-name">${company.name}</div>
-    <div class="company-description">${company.description}</div>
-    <div class="company-phones">${company.phones}</div>
-
-    <table class="info-table">
+<head>
+  <meta charset="UTF-8">
+  <title>Equipos y Reparaciones</title>
+</head>
+<body>
+  <table border="1" cellspacing="0" cellpadding="5">
+    <thead>
       <tr>
-        <td class="left-col">
-          <strong>Cliente:</strong> ${client_name} &nbsp;&nbsp;&nbsp;
-          <strong>Fecha:</strong> ${receipt_date}<br>
-          <strong>Celular:</strong> ${phone_1}${phone_2 ? ' / ' + phone_2 : ''}
-        </td>
-        <td class="right-col">
-          <strong>Técnico Responsable:</strong> ${company.ResponsibleTechnician}<br>
-          <strong>N° Nota de Venta:</strong> ${numTicket}
-        </td>
+        <th>Equipo</th>
+        <th>Reparaciones</th>
+        <th>Precio</th>
+        <th>Observaciones</th>
       </tr>
-    </table>
+    </thead>
+    <tbody id="equipments-table"></tbody>
+  </table>
 
-    <table class="equipos-table">
-      <thead>
-        <tr>
-          <th>Equipo</th>
-          <th>Reparación</th>
-          <th>Precio</th>
-          <th>Observaciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${repairs.map(equipo => {
-          const rowspan = equipo.reparaciones.length;
-          return equipo.reparaciones.map((rep, index) => `
-            <tr>
-              ${index === 0 ? `<td class="equipo-cell" rowspan="${rowspan}">${equipo.nombre}</td>` : ''}
-              <td class="repair-cell">${rep.detalle}</td>
-              <td class="price-cell">${company.CurrencySymbol}${rep.precio}</td>
-              ${index === 0 ? `<td class="obs-cell" rowspan="${rowspan}">${equipo.observaciones || ''}</td>` : ''}
-            </tr>
-          `).join('');
-        }).join('')}
-      </tbody>
-    </table>
-  </body>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const equipments = JSON.parse(params.get("equipments"));
+
+    const tbody = document.getElementById("equipments-table");
+
+    equipments.forEach(eq => {
+      const repairCount = eq.repairs.length;
+      const tr = document.createElement("tr");
+
+      // Celda Equipo
+      const tdEquipo = document.createElement("td");
+      tdEquipo.textContent = eq.device;
+      tdEquipo.rowSpan = repairCount;
+      tdEquipo.style.verticalAlign = "middle";
+      tdEquipo.style.textAlign = "left";
+      tr.appendChild(tdEquipo);
+
+      // Primera reparación
+      const tdRepair = document.createElement("td");
+      tdRepair.textContent = eq.repairs[0].repairDetail;
+      tdRepair.style.verticalAlign = "middle";
+      tr.appendChild(tdRepair);
+
+      const tdPrice = document.createElement("td");
+      tdPrice.textContent = eq.repairs[0].price;
+      tdPrice.style.verticalAlign = "middle";
+      tr.appendChild(tdPrice);
+
+      // Observaciones
+      const tdObs = document.createElement("td");
+      tdObs.textContent = eq.observations || "";
+      tdObs.rowSpan = repairCount;
+      tdObs.style.verticalAlign = "middle";
+      tr.appendChild(tdObs);
+
+      tbody.appendChild(tr);
+
+      // Reparaciones restantes (sin líneas horizontales entre ellas)
+      for (let i = 1; i < repairCount; i++) {
+        const trRepair = document.createElement("tr");
+
+        const tdRepairExtra = document.createElement("td");
+        tdRepairExtra.textContent = eq.repairs[i].repairDetail;
+        tdRepairExtra.style.borderTop = "none";
+        trRepair.appendChild(tdRepairExtra);
+
+        const tdPriceExtra = document.createElement("td");
+        tdPriceExtra.textContent = eq.repairs[i].price;
+        tdPriceExtra.style.borderTop = "none";
+        trRepair.appendChild(tdPriceExtra);
+
+        tbody.appendChild(trRepair);
+      }
+    });
+  </script>
+</body>
 </html>
