@@ -5,103 +5,102 @@
   <title>Equipos</title>
   <style>
     table {
-      width: 100%;
       border-collapse: collapse;
-      border: 1px solid black;
+      width: 100%;
     }
     th, td {
       border: 1px solid black;
       padding: 5px;
-      text-align: center;
+    }
+    td {
       vertical-align: middle;
     }
-    .no-border {
-      border-top: none;
-      border-bottom: none;
+    .left {
+      text-align: left;
+    }
+    .center {
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  XXXXXXXXXXXXXXXXX
+  rrrrrrrrr
   <table>
     <thead>
       <tr>
         <th>Equipo</th>
-        <th>Reparación</th>
+        <th>Reparaciones</th>
         <th>Precio</th>
         <th>Observaciones</th>
       </tr>
     </thead>
-    <tbody id="equipments-table">
-    </tbody>
+    <tbody id="equipmentsTable"></tbody>
   </table>
 
   <script>
-    // Obtener parámetros de la URL
     const params = new URLSearchParams(window.location.search);
-    const equipmentsData = params.get("equipments");
+    const equipments = JSON.parse(params.get('equipments') || '[]');
 
-    if (equipmentsData) {
-      try {
-        const equipments = JSON.parse(decodeURIComponent(equipmentsData));
-        const tbody = document.getElementById("equipments-table");
+    const tableBody = document.getElementById('equipmentsTable');
 
-        equipments.forEach(eq => {
-          const repairs = eq.repairs || [];
-          const rowSpan = repairs.length || 1;
+    equipments.forEach(eq => {
+      const repairsCount = eq.repairs.length || 1;
 
-          repairs.forEach((rep, index) => {
-            const tr = document.createElement("tr");
+      // Fila principal con rowspan
+      const row = document.createElement('tr');
 
-            if (index === 0) {
-              // Celda de Equipo (centrada verticalmente)
-              const tdEquipo = document.createElement("td");
-              tdEquipo.textContent = eq.device || "";
-              tdEquipo.rowSpan = rowSpan;
-              tr.appendChild(tdEquipo);
-            }
+      // Columna equipo
+      const tdEquipo = document.createElement('td');
+      tdEquipo.textContent = eq.device || '';
+      tdEquipo.classList.add('left');
+      tdEquipo.rowSpan = repairsCount;
+      row.appendChild(tdEquipo);
 
-            // Reparación
-            const tdRepair = document.createElement("td");
-            tdRepair.textContent = rep.repairDetail || "";
-            tr.appendChild(tdRepair);
+      // Columna reparacion y precio
+      const tdRepairs = document.createElement('td');
+      tdRepairs.classList.add('center');
+      tdRepairs.style.borderBottom = 'none';
+      tdRepairs.style.borderTop = 'none';
+      tdRepairs.textContent = eq.repairs[0]?.repairDetail || '';
+      row.appendChild(tdRepairs);
 
-            // Precio
-            const tdPrice = document.createElement("td");
-            tdPrice.textContent = rep.price || "";
-            tr.appendChild(tdPrice);
+      const tdPrice = document.createElement('td');
+      tdPrice.classList.add('center');
+      tdPrice.style.borderBottom = 'none';
+      tdPrice.style.borderTop = 'none';
+      tdPrice.textContent = eq.repairs[0]?.price ?? '';
+      row.appendChild(tdPrice);
 
-            if (index === 0) {
-              // Observaciones (una sola vez)
-              const tdObs = document.createElement("td");
-              tdObs.textContent = eq.observations || "";
-              tdObs.rowSpan = rowSpan;
-              tr.appendChild(tdObs);
-            }
+      // Columna observaciones
+      const tdObs = document.createElement('td');
+      tdObs.textContent = eq.observations || '';
+      tdObs.classList.add('center');
+      tdObs.rowSpan = repairsCount;
+      row.appendChild(tdObs);
 
-            tbody.appendChild(tr);
-          });
+      tableBody.appendChild(row);
 
-          if (repairs.length === 0) {
-            const tr = document.createElement("tr");
-            const tdEquipo = document.createElement("td");
-            tdEquipo.textContent = eq.device || "";
-            tr.appendChild(tdEquipo);
+      // Filas adicionales solo para reparaciones y precio
+      for (let i = 1; i < repairsCount; i++) {
+        const subRow = document.createElement('tr');
 
-            tr.appendChild(document.createElement("td"));
-            tr.appendChild(document.createElement("td"));
+        const tdRepair = document.createElement('td');
+        tdRepair.classList.add('center');
+        tdRepair.style.borderBottom = 'none';
+        tdRepair.style.borderTop = 'none';
+        tdRepair.textContent = eq.repairs[i]?.repairDetail || '';
+        subRow.appendChild(tdRepair);
 
-            const tdObs = document.createElement("td");
-            tdObs.textContent = eq.observations || "";
-            tr.appendChild(tdObs);
+        const tdSubPrice = document.createElement('td');
+        tdSubPrice.classList.add('center');
+        tdSubPrice.style.borderBottom = 'none';
+        tdSubPrice.style.borderTop = 'none';
+        tdSubPrice.textContent = eq.repairs[i]?.price ?? '';
+        subRow.appendChild(tdSubPrice);
 
-            tbody.appendChild(tr);
-          }
-        });
-      } catch (error) {
-        console.error("Error al parsear los datos de equipos:", error);
+        tableBody.appendChild(subRow);
       }
-    }
+    });
   </script>
 </body>
 </html>
