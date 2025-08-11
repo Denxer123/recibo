@@ -2,74 +2,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Recibo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      margin: 20px;
-    }
-    .company-name {
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .company-description {
-      text-align: center;
-      font-size: 12px;
-    }
-    .company-phones {
-      text-align: center;
-      font-size: 11px;
-      margin-bottom: 10px;
-    }
-    .info-table, .equipments-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      border: 1px solid black;
-    }
-    .info-table td, .equipments-table td, .equipments-table th {
-      border: 1px solid black;
-      padding: 5px;
-    }
-    .equipments-table th {
-      background: #eee;
-    }
-    .totals {
-      text-align: right;
-      margin-top: 10px;
-    }
-    .clauses {
-      margin-top: 15px;
-      font-size: 10px;
-    }
-  </style>
+  <title>Equipos a Reparar</title>
 </head>
 <body>
-
-  <!-- Datos de la empresa -->
-  <div class="company-name" id="company_name"></div>
-  <div class="company-description" id="company_description"></div>
-  <div class="company-phones" id="company_phones"></div>
-
-  <!-- Datos cliente y ticket -->
-  <table class="info-table">
-    <tr>
-      <td>
-        <strong>Cliente:</strong> <span id="client_name"></span><br>
-        <strong>Fecha:</strong> <span id="receipt_date"></span><br>
-        <strong>Celular:</strong> <span id="phone_1"></span><span id="phone_2"></span>
-      </td>
-      <td>
-        <strong>Técnico Responsable:</strong> <span id="responsible"></span><br>
-        <strong>N° Nota de Venta:</strong> <span id="num_ticket"></span>
-      </td>
-    </tr>
-  </table>
-
-  <!-- Tabla de equipos -->
-  <table class="equipments-table">
+  <h2>Equipos a Reparar</h2>
+  <table border="1" cellpadding="5" cellspacing="0">
     <thead>
       <tr>
         <th>Equipo</th>
@@ -77,70 +14,26 @@
         <th>Precio</th>
       </tr>
     </thead>
-    <tbody id="equipments_body"></tbody>
+    <tbody id="equipmentsTable"></tbody>
   </table>
 
-  <!-- Totales -->
-  <div class="totals">
-    <strong>Total:</strong> <span id="total"></span><br>
-    <strong>Adelanto:</strong> <span id="advance"></span><br>
-    <strong>Resta:</strong> <span id="resta"></span>
-  </div>
-
-  <!-- Cláusulas -->
-  <div class="clauses" id="clauses"></div>
-
   <script>
-    // Capturar parámetros desde la URL
-    const urlParams = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
+    const equipments = JSON.parse(params.get("equipments") || "[]");
 
-    // Datos de empresa
-    document.getElementById("company_name").textContent = urlParams.get("company_name");
-    document.getElementById("company_description").textContent = urlParams.get("company_description");
-    document.getElementById("company_phones").textContent = urlParams.get("company_phones");
+    const tableBody = document.getElementById("equipmentsTable");
 
-    // Datos cliente y ticket
-    document.getElementById("client_name").textContent = urlParams.get("client_name");
-    document.getElementById("receipt_date").textContent = urlParams.get("receipt_date");
-    document.getElementById("phone_1").textContent = urlParams.get("phone_1");
-    document.getElementById("phone_2").textContent = urlParams.get("phone_2") ? " / " + urlParams.get("phone_2") : "";
-    document.getElementById("responsible").textContent = urlParams.get("responsible");
-    document.getElementById("num_ticket").textContent = urlParams.get("num_ticket");
-
-    // Totales
-    const currency = urlParams.get("currency");
-    const total = parseFloat(urlParams.get("total") || 0);
-    const advance = parseFloat(urlParams.get("advance") || 0);
-    const resta = total - advance;
-
-    document.getElementById("total").textContent = currency + total.toFixed(2);
-    document.getElementById("advance").textContent = currency + advance.toFixed(2);
-    document.getElementById("resta").textContent = currency + resta.toFixed(2);
-
-    // Cláusulas
-    document.getElementById("clauses").textContent = urlParams.get("clauses");
-
-    // Equipos (en JSON)
-    const equipmentsJSON = urlParams.get("equipments");
-    if (equipmentsJSON) {
-      try {
-        const equipments = JSON.parse(equipmentsJSON);
-        const tbody = document.getElementById("equipments_body");
-        equipments.forEach(eq => {
-          eq.repairs.forEach(r => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td>${eq.name}</td>
-              <td>${r.repair}</td>
-              <td>${currency}${parseFloat(r.price).toFixed(2)}</td>
-            `;
-            tbody.appendChild(tr);
-          });
-        });
-      } catch (e) {
-        console.error("Error parseando equipos:", e);
-      }
-    }
+    equipments.forEach(eq => {
+      eq.repairs.forEach(repair => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${eq.name}</td>
+          <td>${repair.name}</td>
+          <td>${repair.price}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    });
   </script>
 </body>
 </html>
