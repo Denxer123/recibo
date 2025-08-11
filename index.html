@@ -2,30 +2,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Equipos</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 5px;
-    }
-    td {
-      vertical-align: middle;
-    }
-    .left {
-      text-align: left;
-    }
-    .center {
-      text-align: center;
-    }
-  </style>
+  <title>Equipos y Reparaciones</title>
 </head>
 <body>
-  rrrrrrrrr
-  <table>
+  cccccccccccccccc
+  <table border="1" cellspacing="0" cellpadding="5">
     <thead>
       <tr>
         <th>Equipo</th>
@@ -34,71 +15,62 @@
         <th>Observaciones</th>
       </tr>
     </thead>
-    <tbody id="equipmentsTable"></tbody>
+    <tbody id="equipments-table"></tbody>
   </table>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const equipments = JSON.parse(params.get('equipments') || '[]');
+    const equipments = JSON.parse(params.get("equipments"));
 
-    const tableBody = document.getElementById('equipmentsTable');
+    const tbody = document.getElementById("equipments-table");
 
     equipments.forEach(eq => {
-      const repairsCount = eq.repairs.length || 1;
+      const repairCount = eq.repairs.length;
+      const tr = document.createElement("tr");
 
-      // Fila principal con rowspan
-      const row = document.createElement('tr');
+      // Celda Equipo
+      const tdEquipo = document.createElement("td");
+      tdEquipo.textContent = eq.device;
+      tdEquipo.rowSpan = repairCount;
+      tdEquipo.style.verticalAlign = "middle";
+      tdEquipo.style.textAlign = "left";
+      tr.appendChild(tdEquipo);
 
-      // Columna equipo
-      const tdEquipo = document.createElement('td');
-      tdEquipo.textContent = eq.device || '';
-      tdEquipo.classList.add('left');
-      tdEquipo.rowSpan = repairsCount;
-      row.appendChild(tdEquipo);
+      // Primera reparación
+      const tdRepair = document.createElement("td");
+      tdRepair.textContent = eq.repairs[0].repairDetail;
+      tdRepair.style.verticalAlign = "middle";
+      tr.appendChild(tdRepair);
 
-      // Columna reparacion y precio
-      const tdRepairs = document.createElement('td');
-      tdRepairs.classList.add('center');
-      tdRepairs.style.borderBottom = 'none';
-      tdRepairs.style.borderTop = 'none';
-      tdRepairs.textContent = eq.repairs[0]?.repairDetail || '';
-      row.appendChild(tdRepairs);
+      const tdPrice = document.createElement("td");
+      tdPrice.textContent = eq.repairs[0].price;
+      tdPrice.style.verticalAlign = "middle";
+      tr.appendChild(tdPrice);
 
-      const tdPrice = document.createElement('td');
-      tdPrice.classList.add('center');
-      tdPrice.style.borderBottom = 'none';
-      tdPrice.style.borderTop = 'none';
-      tdPrice.textContent = eq.repairs[0]?.price ?? '';
-      row.appendChild(tdPrice);
+      // Observaciones
+      const tdObs = document.createElement("td");
+      tdObs.textContent = eq.observations || "";
+      tdObs.rowSpan = repairCount;
+      tdObs.style.verticalAlign = "middle";
+      tr.appendChild(tdObs);
 
-      // Columna observaciones
-      const tdObs = document.createElement('td');
-      tdObs.textContent = eq.observations || '';
-      tdObs.classList.add('center');
-      tdObs.rowSpan = repairsCount;
-      row.appendChild(tdObs);
+      tbody.appendChild(tr);
 
-      tableBody.appendChild(row);
+      // Reparaciones restantes (sin líneas horizontales entre ellas)
+      for (let i = 1; i < repairCount; i++) {
+        const trRepair = document.createElement("tr");
 
-      // Filas adicionales solo para reparaciones y precio
-      for (let i = 1; i < repairsCount; i++) {
-        const subRow = document.createElement('tr');
+        const tdRepairExtra = document.createElement("td");
+        tdRepairExtra.textContent = eq.repairs[i].repairDetail;
+        tdRepairExtra.style.borderTop = "none";
+        trRepair.appendChild(tdRepairExtra);
 
-        const tdRepair = document.createElement('td');
-        tdRepair.classList.add('center');
-        tdRepair.style.borderBottom = 'none';
-        tdRepair.style.borderTop = 'none';
-        tdRepair.textContent = eq.repairs[i]?.repairDetail || '';
-        subRow.appendChild(tdRepair);
+        const tdPriceExtra = document.createElement("td");
+        tdPriceExtra.textContent = eq.repairs[i].price;
+        tdPriceExtra.style.borderTop = "none";
+        trRepair.appendChild(tdPriceExtra);
 
-        const tdSubPrice = document.createElement('td');
-        tdSubPrice.classList.add('center');
-        tdSubPrice.style.borderBottom = 'none';
-        tdSubPrice.style.borderTop = 'none';
-        tdSubPrice.textContent = eq.repairs[i]?.price ?? '';
-        subRow.appendChild(tdSubPrice);
-
-        tableBody.appendChild(subRow);
+        tbody.appendChild(trRepair);
       }
     });
   </script>
