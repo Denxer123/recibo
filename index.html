@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Recibo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      font-size: 14px;
+    }
+    .receipt {
+      border: 1px solid #000;
+      padding: 15px;
+      width: 300px;
+    }
+    .receipt h2 {
+      text-align: center;
+      margin: 0 0 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <h2>Recibo</h2>
+    <p><strong>Cliente:</strong> <span id="client_name"></span></p>
+    <p><strong>Teléfono:</strong> <span id="phone"></span></p>
+    <p><strong>Fecha:</strong> <span id="date"></span></p>
+  </div>
+
+  <script>
+    // Función para obtener parámetros de la URL
+    function getParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name) || '';
+    }
+
+    // Insertar valores en el HTML
+    document.getElementById('client_name').textContent = getParam('client_name');
+    document.getElementById('phone').textContent = getParam('phone');
+    document.getElementById('date').textContent = getParam('date');
+
+    // Imprimir automáticamente
+    window.onload = function() {
+      window.print();
+    };
+  </script>
+</body>
+</html>
