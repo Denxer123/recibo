@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Equipos a Reparar</title>
+  <title>Equipos</title>
 </head>
 <body>
-  <h2>Equipos a Reparar</h2>
-  <table border="1" cellpadding="5" cellspacing="0">
+  <h2>Lista de Equipos</h2>
+  <table border="1">
     <thead>
       <tr>
         <th>Equipo</th>
@@ -14,26 +14,47 @@
         <th>Precio</th>
       </tr>
     </thead>
-    <tbody id="equipmentsTable"></tbody>
+    <tbody id="equipos-body"></tbody>
   </table>
 
   <script>
+    // Leer parámetros de la URL
     const params = new URLSearchParams(window.location.search);
-    const equipments = JSON.parse(params.get("equipments") || "[]");
+    const equipmentsParam = params.get("equipments");
 
-    const tableBody = document.getElementById("equipmentsTable");
+    if (equipmentsParam) {
+      try {
+        // Decodificar y parsear JSON
+        const equipments = JSON.parse(decodeURIComponent(equipmentsParam));
+        
+        const tbody = document.getElementById("equipos-body");
+        
+        equipments.forEach(equip => {
+          equip.repairs.forEach(repair => {
+            const row = document.createElement("tr");
 
-    equipments.forEach(eq => {
-      eq.repairs.forEach(repair => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${eq.name}</td>
-          <td>${repair.name}</td>
-          <td>${repair.price}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-    });
+            const deviceCell = document.createElement("td");
+            deviceCell.textContent = equip.device;
+            row.appendChild(deviceCell);
+
+            const repairCell = document.createElement("td");
+            repairCell.textContent = repair.repairDetail;
+            row.appendChild(repairCell);
+
+            const priceCell = document.createElement("td");
+            priceCell.textContent = repair.price;
+            row.appendChild(priceCell);
+
+            tbody.appendChild(row);
+          });
+        });
+
+      } catch (error) {
+        console.error("Error procesando los equipos:", error);
+      }
+    } else {
+      document.getElementById("equipos-body").innerHTML = "<tr><td colspan='3'>No se enviaron equipos</td></tr>";
+    }
   </script>
 </body>
 </html>
