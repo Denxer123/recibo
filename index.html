@@ -1,78 +1,110 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Equipos y Reparaciones</title>
-</head>
-<body>
-  cccccccccccccccc
-  <table border="1" cellspacing="0" cellpadding="5">
-    <thead>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      @page {
+        size: A4 landscape;
+        margin: 20px;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        margin: 0;
+        padding: 10px;
+      }
+      .company-name {
+        text-align: center;
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 2px;
+      }
+      .company-description {
+        text-align: center;
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+      .company-phones {
+        text-align: center;
+        font-size: 10px;
+      }
+      .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        border: 1px solid black;
+      }
+      .info-table td {
+        padding: 5px;
+        vertical-align: top;
+      }
+      .left-col {
+        width: 70%;
+        border-right: 1px solid black;
+      }
+      .right-col {
+        width: 30%;
+      }
+      .equipos-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        border: 1px solid black;
+      }
+      .equipos-table td, .equipos-table th {
+        border: 1px solid black;
+        padding: 5px;
+      }
+      .equipos-table th {
+        text-align: center;
+      }
+      .center-vertical {
+        vertical-align: middle;
+        text-align: center;
+      }
+      .left-align {
+        text-align: left;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="company-name">${company.name}</div>
+    <div class="company-description">${company.description}</div>
+    <div class="company-phones">${company.phones}</div>
+
+    <table class="info-table">
+      <tr>
+        <td class="left-col">
+          <strong>Cliente:</strong> ${client_name} &nbsp;&nbsp;&nbsp;
+          <strong>Fecha:</strong> ${receipt_date}<br>
+          <strong>Celular:</strong> ${phone_1}${phone_2 ? ' / ' + phone_2 : ''}
+        </td>
+        <td class="right-col">
+          <strong>Técnico Responsable:</strong> ${company.ResponsibleTechnician}<br>
+          <strong>N° Nota de Venta:</strong> ${numTicket}
+        </td>
+      </tr>
+    </table>
+
+    <table class="equipos-table">
       <tr>
         <th>Equipo</th>
         <th>Reparaciones</th>
         <th>Precio</th>
         <th>Observaciones</th>
       </tr>
-    </thead>
-    <tbody id="equipments-table"></tbody>
-  </table>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const equipments = JSON.parse(params.get("equipments"));
-
-    const tbody = document.getElementById("equipments-table");
-
-    equipments.forEach(eq => {
-      const repairCount = eq.repairs.length;
-      const tr = document.createElement("tr");
-
-      // Celda Equipo
-      const tdEquipo = document.createElement("td");
-      tdEquipo.textContent = eq.device;
-      tdEquipo.rowSpan = repairCount;
-      tdEquipo.style.verticalAlign = "middle";
-      tdEquipo.style.textAlign = "left";
-      tr.appendChild(tdEquipo);
-
-      // Primera reparación
-      const tdRepair = document.createElement("td");
-      tdRepair.textContent = eq.repairs[0].repairDetail;
-      tdRepair.style.verticalAlign = "middle";
-      tr.appendChild(tdRepair);
-
-      const tdPrice = document.createElement("td");
-      tdPrice.textContent = eq.repairs[0].price;
-      tdPrice.style.verticalAlign = "middle";
-      tr.appendChild(tdPrice);
-
-      // Observaciones
-      const tdObs = document.createElement("td");
-      tdObs.textContent = eq.observations || "";
-      tdObs.rowSpan = repairCount;
-      tdObs.style.verticalAlign = "middle";
-      tr.appendChild(tdObs);
-
-      tbody.appendChild(tr);
-
-      // Reparaciones restantes (sin líneas horizontales entre ellas)
-      for (let i = 1; i < repairCount; i++) {
-        const trRepair = document.createElement("tr");
-
-        const tdRepairExtra = document.createElement("td");
-        tdRepairExtra.textContent = eq.repairs[i].repairDetail;
-        tdRepairExtra.style.borderTop = "none";
-        trRepair.appendChild(tdRepairExtra);
-
-        const tdPriceExtra = document.createElement("td");
-        tdPriceExtra.textContent = eq.repairs[i].price;
-        tdPriceExtra.style.borderTop = "none";
-        trRepair.appendChild(tdPriceExtra);
-
-        tbody.appendChild(trRepair);
-      }
-    });
-  </script>
-</body>
+      ${equipments.map(eq => {
+        const rowSpan = eq.repairs.length;
+        return eq.repairs.map((rep, idx) => `
+          <tr>
+            ${idx === 0 ? `<td class="left-align" rowspan="${rowSpan}">${eq.device}</td>` : ''}
+            <td class="center-vertical">${rep.repairDetail}</td>
+            <td class="center-vertical">${company.CurrencySymbol}${rep.price}</td>
+            ${idx === 0 ? `<td class="center-vertical" rowspan="${rowSpan}">${eq.observations || ''}</td>` : ''}
+          </tr>
+        `).join('');
+      }).join('')}
+    </table>
+  </body>
 </html>
