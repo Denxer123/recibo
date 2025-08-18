@@ -1,15 +1,14 @@
-/* Tamaño de la página A5 en horizontal */
+/* Página A5 horizontal */
 @page {
   size: A5 landscape;
   margin: 10mm;
 }
 
-/* Configuración general del body */
 body {
   font-family: Arial, sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
-  padding: 8px;
+  padding: 5px;
   width: 210mm;
   height: 148mm;
   box-sizing: border-box;
@@ -19,31 +18,27 @@ body {
 .company-name {
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 15px;
   margin-bottom: 2px;
 }
-.company-description {
-  text-align: center;
-  font-size: 10px;
-  margin-bottom: 2px;
-}
+.company-description,
 .company-phones {
   text-align: center;
   font-size: 9px;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
-/* Tabla de info cliente / técnico */
+/* Info cliente/técnico */
 .info-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 5px;
+  margin-top: 4px;
   border: 1px solid black;
 }
 .info-table td {
-  padding: 4px;
+  padding: 3px;
+  font-size: 9px;
   vertical-align: top;
-  font-size: 10px;
 }
 .left-col {
   width: 70%;
@@ -53,47 +48,58 @@ body {
   width: 30%;
 }
 
-/* Tabla de reparaciones */
+/* Tabla reparaciones */
 .repairs-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 6px;
-  font-size: 10px;
+  margin-top: 5px;
+  font-size: 9px;
 }
 .repairs-table th,
 .repairs-table td {
   border: 1px solid black;
-  padding: 4px;
+  padding: 3px;
 }
 .repairs-table th {
   background: #f2f2f2;
   text-align: center;
-  font-size: 10px;
   font-weight: bold;
 }
+.repairs-table tr:nth-child(even) td {
+  background: #fafafa;
+}
 
-/* Tabla final de cláusulas y totales */
+/* Footer: cláusulas y totales */
 .footer-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 6px;
-  font-size: 10px;
+  margin-top: 5px;
+  font-size: 9px;
 }
 .footer-table td {
   border: 1px solid black;
-  padding: 4px;
+  padding: 3px;
   vertical-align: top;
 }
 .footer-left {
   width: 70%;
-  font-size: 9px;
+  text-align: justify;
+  font-size: 8.5px;
 }
 .footer-right {
   width: 30%;
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
+}
+.footer-right table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.footer-right td {
+  border: none;
+  padding: 2px;
+  text-align: right;
 }
 .footer-right strong {
-  display: block;
-  margin-bottom: 2px;
+  float: left;
 }
