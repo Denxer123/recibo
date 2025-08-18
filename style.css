@@ -6,9 +6,9 @@
 
 body {
   font-family: Arial, sans-serif;
-  font-size: 10px;
+  font-size: 11px; /* más grande que 10px */
   margin: 0;
-  padding: 5px;
+  padding: 8px;
   width: 210mm;
   height: 148mm;
   box-sizing: border-box;
@@ -18,13 +18,13 @@ body {
 .company-name {
   text-align: center;
   font-weight: bold;
-  font-size: 15px;
-  margin-bottom: 2px;
+  font-size: 16px; /* más grande para resaltar */
+  margin-bottom: 3px;
 }
 .company-description,
 .company-phones {
   text-align: center;
-  font-size: 9px;
+  font-size: 11px;
   margin-bottom: 2px;
 }
 
@@ -32,17 +32,17 @@ body {
 .info-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 4px;
+  margin-top: 6px;
   border: 1px solid black;
 }
 .info-table td {
-  padding: 3px;
-  font-size: 9px;
+  padding: 5px;
+  font-size: 11px;
   vertical-align: top;
+  border: 1px solid black; /* ahora con bordes internos */
 }
 .left-col {
   width: 70%;
-  border-right: 1px solid black;
 }
 .right-col {
   width: 30%;
@@ -52,44 +52,42 @@ body {
 .repairs-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 5px;
-  font-size: 9px;
+  margin-top: 8px;
+  font-size: 11px;
 }
 .repairs-table th,
 .repairs-table td {
   border: 1px solid black;
-  padding: 3px;
+  padding: 5px;
 }
 .repairs-table th {
-  background: #f2f2f2;
+  background: #eaeaea;
   text-align: center;
   font-weight: bold;
 }
 .repairs-table tr:nth-child(even) td {
-  background: #fafafa;
+  background: #f9f9f9;
 }
 
 /* Footer: cláusulas y totales */
 .footer-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 5px;
-  font-size: 9px;
+  margin-top: 8px;
+  font-size: 10.5px;
 }
 .footer-table td {
   border: 1px solid black;
-  padding: 3px;
+  padding: 6px;
   vertical-align: top;
 }
 .footer-left {
   width: 70%;
   text-align: justify;
-  font-size: 8.5px;
 }
 .footer-right {
   width: 30%;
   text-align: center;
-  font-size: 9px;
 }
 .footer-right table {
   width: 100%;
@@ -97,8 +95,9 @@ body {
 }
 .footer-right td {
   border: none;
-  padding: 2px;
+  padding: 3px;
   text-align: right;
+  font-size: 11px;
 }
 .footer-right strong {
   float: left;
