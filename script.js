@@ -1,7 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 
 // --- Empresa ---
-document.getElementById("company-name").textContent = params.get("company_name");
 document.getElementById("company-description").textContent = params.get("company_description");
 document.getElementById("company-phones").textContent = params.get("company_phones");
 document.getElementById("company-address").textContent = params.get("company_address");
