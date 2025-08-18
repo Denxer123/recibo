@@ -1,38 +1,99 @@
+/* Tamaño de la página A5 en horizontal */
+@page {
+  size: A5 landscape;
+  margin: 10mm;
+}
+
+/* Configuración general del body */
 body {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    margin: 20px;
-    background-color: red;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  margin: 0;
+  padding: 8px;
+  width: 210mm;
+  height: 148mm;
+  box-sizing: border-box;
 }
+
+/* Encabezado empresa */
 .company-name {
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 2px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 2px;
 }
-.company-description,
-.company-phones,
-.company-address {
-    text-align: center;
-    font-size: 11px;
+.company-description {
+  text-align: center;
+  font-size: 10px;
+  margin-bottom: 2px;
 }
-.info-table, .equipments-table, .totals-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.company-phones {
+  text-align: center;
+  font-size: 9px;
+  margin-bottom: 4px;
 }
-.info-table td,
-.equipments-table td,
-.equipments-table th,
-.totals-table td {
-    border: 1px solid black;
-    padding: 5px;
-    vertical-align: top;
+
+/* Tabla de info cliente / técnico */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+  border: 1px solid black;
 }
-.equipments-table th {
-    background: #eee;
+.info-table td {
+  padding: 4px;
+  vertical-align: top;
+  font-size: 10px;
 }
-.clauses {
-    font-size: 10px;
-    margin-top: 15px;
+.left-col {
+  width: 70%;
+  border-right: 1px solid black;
+}
+.right-col {
+  width: 30%;
+}
+
+/* Tabla de reparaciones */
+.repairs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 10px;
+}
+.repairs-table th,
+.repairs-table td {
+  border: 1px solid black;
+  padding: 4px;
+}
+.repairs-table th {
+  background: #f2f2f2;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Tabla final de cláusulas y totales */
+.footer-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 10px;
+}
+.footer-table td {
+  border: 1px solid black;
+  padding: 4px;
+  vertical-align: top;
+}
+.footer-left {
+  width: 70%;
+  font-size: 9px;
+}
+.footer-right {
+  width: 30%;
+  text-align: center;
+  font-size: 10px;
+}
+.footer-right strong {
+  display: block;
+  margin-bottom: 2px;
 }
