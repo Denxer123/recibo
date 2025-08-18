@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 20px;
+}
+.company-name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+.company-description,
+.company-phones,
+.company-address {
+    text-align: center;
+    font-size: 11px;
+}
+.info-table, .equipments-table, .totals-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.info-table td,
+.equipments-table td,
+.equipments-table th,
+.totals-table td {
+    border: 1px solid black;
+    padding: 5px;
+    vertical-align: top;
+}
+.equipments-table th {
+    background: #eee;
+}
+.clauses {
+    font-size: 10px;
+    margin-top: 15px;
+}
