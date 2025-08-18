@@ -2,11 +2,37 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Equipos y Reparaciones</title>
+  <title>Recibo</title>
 </head>
 <body>
-  <h2>Recibo uno</h2>
-  <table border="1" cellspacing="0" cellpadding="5">
+  <!-- Datos de la empresa -->
+  <div id="company-info" style="text-align:center; margin-bottom:20px;">
+    <h2 id="company-name"></h2>
+    <div id="company-description"></div>
+    <div id="company-phones"></div>
+    <div id="company-address"></div>
+  </div>
+
+  <!-- Datos del cliente y ticket -->
+  <table border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-bottom:20px;">
+    <tbody>
+      <tr>
+        <td><strong>Cliente:</strong> <span id="client-name"></span></td>
+        <td><strong>Celular:</strong> <span id="client-phone"></span></td>
+      </tr>
+      <tr>
+        <td><strong>Fecha:</strong> <span id="receipt-date"></span></td>
+        <td><strong>N° Nota de Venta:</strong> <span id="num-ticket"></span></td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong>Técnico Responsable:</strong> <span id="responsible-technician"></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Equipos y reparaciones -->
+  <h3>Equipos y Reparaciones</h3>
+  <table border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-bottom:20px;">
     <thead>
       <tr>
         <th>Equipo</th>
@@ -18,6 +44,26 @@
     <tbody id="equipments-table"></tbody>
   </table>
 
-  <script src="script.js"></script>  
+  <!-- Totales y horario -->
+  <table border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-top:20px;">
+    <tr>
+      <td style="width:70%; vertical-align:top;">
+        <strong>Cláusulas:</strong>
+        <div id="company-clauses"></div>
+      </td>
+      <td style="width:30%; text-align:center; vertical-align:top;">
+        <div><strong>Total:</strong> <span id="total"></span></div>
+        <div><strong>Adelanto:</strong> <span id="advance"></span></div>
+        <div><strong>Resta:</strong> <span id="rest"></span></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align:center;">
+        <strong>Horario:</strong> <span id="company-horary"></span>
+      </td>
+    </tr>
+  </table>
+
+  <script src="script.js"></script>
 </body>
 </html>
