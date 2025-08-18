@@ -74,3 +74,13 @@ equipments.forEach(eq => {
     tbody.appendChild(trRepair);
   }
 });
+
+// Cuando todo el documento se haya cargado
+window.onload = function() {
+  // Aquí ya llenas tus datos normalmente...
+  // Por ejemplo: document.getElementById("company-name").textContent = "Mi Empresa";
+
+  // Y al final abres automáticamente la ventana de impresión
+  window.print();
+};
+
