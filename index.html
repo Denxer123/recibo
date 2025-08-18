@@ -1,42 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Recibo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      margin: 20px;
+    }
+    .company-name {
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+    .company-description,
+    .company-phones,
+    .company-address {
+      text-align: center;
+      font-size: 11px;
+    }
+    .info-table, .equipments-table, .totals-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .info-table td,
+    .equipments-table td,
+    .equipments-table th,
+    .totals-table td {
+      border: 1px solid black;
+      padding: 5px;
+      vertical-align: top;
+    }
+    .equipments-table th {
+      background: #eee;
+    }
+    .clauses {
+      font-size: 10px;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Datos de la empresa -->
-  <div id="company-info" style="text-align:center; margin-bottom:20px;">
-    <h2 id="company-name"></h2>
-    <div id="company-description"></div>
-    <div id="company-phones"></div>
-    <div id="company-address"></div>
-  </div>
 
-  <!-- Datos del cliente y ticket -->
-  <table border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-bottom:20px;">
-    <tbody>
-      <tr>
-        <td><strong>Cliente:</strong> <span id="client-name"></span></td>
-        <td><strong>Celular:</strong> <span id="client-phone"></span></td>
-      </tr>
-      <tr>
-        <td><strong>Fecha:</strong> <span id="receipt-date"></span></td>
-        <td><strong>N° Nota de Venta:</strong> <span id="num-ticket"></span></td>
-      </tr>
-      <tr>
-        <td colspan="2"><strong>Técnico Responsable:</strong> <span id="responsible-technician"></span></td>
-      </tr>
-    </tbody>
+  <!-- Empresa -->
+  <div class="company-name" id="company-name"></div>
+  <div class="company-description" id="company-description"></div>
+  <div class="company-phones" id="company-phones"></div>
+  <div class="company-address" id="company-address"></div>
+
+  <!-- Info Cliente y Ticket -->
+  <table class="info-table">
+    <tr>
+      <td>
+        <strong>Cliente:</strong> <span id="client-name"></span><br>
+        <strong>Celular:</strong> <span id="client-phone"></span><br>
+        <strong>Fecha:</strong> <span id="receipt-date"></span>
+      </td>
+      <td>
+        <strong>Técnico Responsable:</strong> <span id="responsible-technician"></span><br>
+        <strong>N° Nota de Venta:</strong> <span id="num-ticket"></span>
+      </td>
+    </tr>
   </table>
 
-  <!-- Equipos y reparaciones -->
-  <h3>Equipos y Reparaciones</h3>
-  <table border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-bottom:20px;">
+  <!-- Tabla Equipos -->
+  <table class="equipments-table">
     <thead>
       <tr>
         <th>Equipo</th>
-        <th>Reparaciones</th>
+        <th>Reparación</th>
         <th>Precio</th>
         <th>Observaciones</th>
       </tr>
@@ -44,22 +79,22 @@
     <tbody id="equipments-table"></tbody>
   </table>
 
-  <!-- Totales y horario -->
-  <table border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-top:20px;">
+  <!-- Totales y Horario -->
+  <table class="totals-table">
     <tr>
-      <td style="width:70%; vertical-align:top;">
-        <strong>Cláusulas:</strong>
-        <div id="company-clauses"></div>
+      <td style="width: 70%;" rowspan="2">
+        <div class="clauses" id="company-clauses"></div>
       </td>
-      <td style="width:30%; text-align:center; vertical-align:top;">
-        <div><strong>Total:</strong> <span id="total"></span></div>
-        <div><strong>Adelanto:</strong> <span id="advance"></span></div>
-        <div><strong>Resta:</strong> <span id="rest"></span></div>
+      <td style="width: 30%; text-align:center;">
+        <strong>Total:</strong> <span id="total"></span><br>
+        <strong>Adelanto:</strong> <span id="advance"></span><br>
+        <strong>Resta:</strong> <span id="rest"></span>
       </td>
     </tr>
     <tr>
-      <td colspan="2" style="text-align:center;">
-        <strong>Horario:</strong> <span id="company-horary"></span>
+      <td style="text-align:center;">
+        <strong>Horario:</strong><br>
+        <span id="company-horary"></span>
       </td>
     </tr>
   </table>
