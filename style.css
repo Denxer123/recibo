@@ -1,104 +1,85 @@
-/* Página A5 horizontal */
-@page {
-  size: A5 landscape;
-  margin: 10mm;
-}
+/* A5 = alto 559px largo 794px */
 
 body {
-  font-family: Arial, sans-serif;
-  font-size: 11px; /* más grande que 10px */
-  margin: 0;
-  padding: 8px;
-  width: 210mm;
-  height: 148mm;
-  box-sizing: border-box;
+  width: 794px;
+  height: 559px;
+  border: 1px solid;
+  padding: 5px 20px;
 }
 
-/* Encabezado empresa */
-.company-name {
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px; /* más grande para resaltar */
-  margin-bottom: 3px;
-}
-.company-description,
-.company-phones {
-  text-align: center;
-  font-size: 11px;
-  margin-bottom: 2px;
+.equipments-table,
+th,
+td {
+  border: 1px solid;
+  border-collapse: collapse;
+  padding-left: 10px;
 }
 
-/* Info cliente/técnico */
 .info-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 6px;
-  border: 1px solid black;
-}
-.info-table td {
-  padding: 5px;
-  font-size: 11px;
-  vertical-align: top;
-  border: 1px solid black; /* ahora con bordes internos */
-}
-.left-col {
-  width: 70%;
-}
-.right-col {
-  width: 30%;
 }
 
-/* Tabla reparaciones */
-.repairs-table {
+.equipments-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 8px;
-  font-size: 11px;
-}
-.repairs-table th,
-.repairs-table td {
-  border: 1px solid black;
-  padding: 5px;
-}
-.repairs-table th {
-  background: #eaeaea;
-  text-align: center;
-  font-weight: bold;
-}
-.repairs-table tr:nth-child(even) td {
-  background: #f9f9f9;
+  margin: 10px 0px;
 }
 
-/* Footer: cláusulas y totales */
-.footer-table {
+.precio {
+  width: 10%;
+}
+
+.totals-table {
   width: 100%;
+
   border-collapse: collapse;
-  margin-top: 8px;
-  font-size: 10.5px;
 }
-.footer-table td {
-  border: 1px solid black;
-  padding: 6px;
-  vertical-align: top;
+
+.cliente {
+  width: 59.1%;
 }
-.footer-left {
-  width: 70%;
-  text-align: justify;
+
+.clausulas {
+  width: 43.4%;
+  padding: 10px;
 }
-.footer-right {
+
+.total {
   width: 30%;
+  padding-left: 89px;
+}
+
+
+.empresa {
+  margin-bottom: 10px;
+}
+
+.company-name,
+.company-description,
+.company-phones,
+.company-address {
   text-align: center;
 }
-.footer-right table {
+
+.company-name {
+  font-size: 50px;
+  font-style: oblique;
+  text-align: center;
+
+}
+
+.company-description {
+  font-size: larger;
+}
+
+.company-phones {
+  font-size: larger;
+  text-decoration: underline;
+}
+
+.company-address {
   width: 100%;
-  border-collapse: collapse;
-}
-.footer-right td {
-  border: none;
-  padding: 3px;
-  text-align: right;
-  font-size: 11px;
-}
-.footer-right strong {
-  float: left;
+  border-spacing: 0px;
+  margin-top: 10px;
+  font-size: 20px;
 }

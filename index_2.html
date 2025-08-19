@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <title>Recibo</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
   <!-- Empresa -->
-  <div class="empresa">
-    <div class="company-name" id="company-name"></div>
-    <div class="company-description" id="company-description"></div>
-    <div class="company-phones" id="company-phones"></div>
-  </div>
+  <div class="company-name" id="company-name"></div>
+  <div class="company-description" id="company-description"></div>
+  <div class="company-phones" id="company-phones"></div>
+  <div class="company-address" id="company-address"></div>
 
   <!-- Info Cliente y Ticket -->
   <table class="info-table">
     <tr>
-      <td class="cliente">
+      <td>
         <strong>Cliente:</strong> <span id="client-name"></span><br>
         <strong>Celular:</strong> <span id="client-phone"></span>
       </td>
@@ -38,15 +35,15 @@
       </td>
     </tr>
   </table>
-
+  
 
   <!-- Tabla Equipos -->
   <table class="equipments-table">
     <thead>
       <tr>
-        <th class="Equipo">Equipo</th>
-        <th class="reparacion">Reparación</th>
-        <th class="precio">Precio</th>
+        <th>Equipo</th>
+        <th>Reparación</th>
+        <th>Precio</th>
         <th>Observaciones</th>
       </tr>
     </thead>
@@ -56,13 +53,13 @@
   <!-- Totales y Horario -->
   <table class="totals-table">
     <tr>
-      <td rowspan="2" class="clausulas">
+      <td style="width: 70%;" rowspan="2">
         <div class="clauses" id="company-clauses"></div>
       </td>
-      <td class="total">
-        <strong>Total:....................</strong> <span id="total"></span><br>
-        <strong>Adelanto:..............</strong> <span id="advance"></span><br>
-        <strong>Resta:....................</strong> <span id="rest"></span>
+      <td style="width: 30%; text-align:center;">
+        <strong>Total:</strong> <span id="total"></span><br>
+        <strong>Adelanto:</strong> <span id="advance"></span><br>
+        <strong>Resta:</strong> <span id="rest"></span>
       </td>
     </tr>
     <tr>
@@ -73,15 +70,6 @@
     </tr>
   </table>
 
-
-  <table class="company-address">
-    <tr>
-      <td class="x" id="company-address"></td>
-    </tr>
-  </table>
-
-
   <script src="script.js"></script>
 </body>
-
 </html>
