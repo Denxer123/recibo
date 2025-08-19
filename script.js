@@ -92,5 +92,6 @@ window.onload = function () {
 
   // Y al final abres automáticamente la ventana de impresión
   window.print();
+  console.log("cargado el documento");
 };
 
