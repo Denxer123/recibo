@@ -76,12 +76,23 @@
 
   <table class="company-address">
     <tr>
-      <td class="x" id="company-address"></td>
+      <td class="address" id="company-address"></td>
     </tr>
   </table>
 
 
   <script src="script.js"></script>
+  <script>
+
+    window.onload = function () {
+      // Aquí ya llenas tus datos normalmente...
+      // Por ejemplo: document.getElementById("company-name").textContent = "Mi Empresa";
+
+      // Y al final abres automáticamente la ventana de impresión
+      window.print();
+      console.log("cargado el documento desde HTML");
+    };
+  </script>
 </body>
 
 </html>
