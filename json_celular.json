@@ -1,0 +1,12 @@
+[
+    {
+        "device": " Samsung A15",
+        "repairs": [
+            {
+                "repairDetail": "Revision por agua",
+                "price": 0
+            }
+        ],
+        "Observation": "El equipo no enciende"
+    }
+]

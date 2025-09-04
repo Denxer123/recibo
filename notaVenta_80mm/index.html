@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recibo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Empresa -->
+    <div class="empresa">
+        <div class="company-name" id="company-name"></div>
+        <div class="company-description" id="company-description"></div>
+        <div class="company-phones" id="company-phones"></div>
+    </div>
+
+    <!-- Info Cliente y Ticket -->
+    <table class="info-table">
+        <tr>
+            <td class="cliente">
+                <strong>Cliente:</strong> <span id="client-name"></span><br>
+                <strong>Celular:</strong> <span id="client-phone"></span>
+            </td>
+            <td>
+                <strong>Tec Responsable:</strong> <span id="responsible-technician"></span><br>
+                <table style="width:100%; border-collapse:collapse; margin-top:3px;">
+                    <tr>
+                        <td style="border:none; text-align:left; padding:0;">
+                            <strong>Nota Venta:</strong> <span id="num-ticket"></span>
+                        </td>
+                        <td style="border:none; text-align:right; padding:0;">
+                            <strong>Fecha:</strong> <span id="receipt-date"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Tabla Equipos -->
+    <table class="equipments-table">
+        <thead>
+            <tr>
+                <th class="Equipo">Equipo</th>
+                <th class="reparacion">Reparación</th>
+                <th class="precio">Precio</th>
+                <th>Obs.</th>
+            </tr>
+        </thead>
+        <tbody id="equipments-table"></tbody>
+    </table>
+
+    <!-- Totales y Horario -->
+    <table class="totals-table">
+        <tr>
+            <td rowspan="2" class="clausulas">
+                <div class="clauses" id="company-clauses"></div>
+            </td>
+            <td class="total">
+                <strong>Total:</strong> <span id="total"></span><br>
+                <strong>Adelanto:</strong> <span id="advance"></span><br>
+                <strong>Resta:</strong> <span id="rest"></span>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;">
+                <strong>Horario:</strong><br>
+                <span id="company-horary"></span>
+            </td>
+        </tr>
+    </table>
+
+    <table class="company-address">
+        <tr>
+            <td class="address" id="company-address"></td>
+        </tr>
+    </table>
+
+    <script src="script.js"></script>
+    <script>
+        window.onload = function () {
+            window.print();
+            console.log("cargado el documento desde HTML");
+        };
+    </script>
+</body>
+
+</html>

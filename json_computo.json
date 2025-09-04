@@ -1,0 +1,29 @@
+[
+    {
+        "device": "Laptop LENOVO",
+        "repairs": [
+            {
+                "repairDetail": "FORMATEO",
+                "price": 40
+            },
+            {
+                "repairDetail": "CAMBIO DE TECLADO",
+                "price": 100
+            },
+            {
+                "repairDetail": "INSTALACIÓN DE PROGRAMAS",
+                "price": 50
+            }
+        ],
+        "obvservations": "El equipo no enciende, hacer manteniemiento por agua",
+        "programas": [
+            "Autocad 2019",
+            "Photoshop 2020",
+            "Revit"
+        ],
+        "cheklist": [
+            "mouse",
+            "cable USB"
+        ]
+    }
+]
