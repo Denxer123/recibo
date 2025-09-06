@@ -16,44 +16,102 @@
         <div class="company-phones" id="company-phones"></div>
     </div>
 
-    <!-- Info Cliente y Ticket -->
-    <table class="info-table">
+    <br>
+
+
+    <!-- Datos de Recibo -->
+    <table class="sales-note-table">
+        <thead>
+            <tr>
+                <th colspan="2">DATOS DE RECIBO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="sales-note-left">Tec Responsable:</td>
+                <td class="sales-note-rigth" id="responsible-technician"></td>
+            </tr>
+            <tr>
+                <td>Nota Venta</td>
+                <td id="num-ticket"></td>
+            </tr>
+            <tr>
+                <td>Fecha:</td>
+                <td id="receipt-date"></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <!-- Cliente -->
+
+    <table class="client-table">
         <tr>
-            <td class="cliente">
-                <strong>Cliente:</strong> <span id="client-name"></span><br>
-                <strong>Celular:</strong> <span id="client-phone"></span>
-            </td>
-            <td>
-                <strong>Tec Responsable:</strong> <span id="responsible-technician"></span><br>
-                <table style="width:100%; border-collapse:collapse; margin-top:3px;">
-                    <tr>
-                        <td style="border:none; text-align:left; padding:0;">
-                            <strong>Nota Venta:</strong> <span id="num-ticket"></span>
-                        </td>
-                        <td style="border:none; text-align:right; padding:0;">
-                            <strong>Fecha:</strong> <span id="receipt-date"></span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
+            <th colspan="2">DATOS DE CLIENTE</th>
         </tr>
+        <tr>
+            <td id="client-name">Denser Medina Cerron</td>
+        </tr>
+        <tr>
+            <td id="client-phone">971393955</td>
+        </tr>
+    </table>
+
+    <!-- TABLA EQUIPOS -->
+    <table>
+        <tr>
+            <th></th>
+        </tr>
+
     </table>
 
     <!-- Tabla Equipos -->
     <table class="equipments-table">
         <thead>
-            <tr>
-                <th class="Equipo">Equipo</th>
-                <th class="reparacion">Reparación</th>
-                <th class="precio">Precio</th>
-                <th>Obs.</th>
+            <tr class="equipments-table-head">
+                <th colspan="2" class="equipments-table-head">EQUIPOS EN REVISIÓN</th>
             </tr>
         </thead>
         <tbody id="equipments-table"></tbody>
     </table>
 
-    <!-- Totales y Horario -->
+
+
     <table class="totals-table">
+        <tr>
+            <td class="total">
+                <strong>Total:</strong> <br><span id="total"></span><br>
+            </td>
+            <td>
+                <strong>Adelanto:</strong> <br> <span id="advance"></span><br>
+            </td>
+            <td>
+                <strong>Resta:</strong> <br> <span id="rest"></span>
+            </td>
+        </tr>
+
+    </table>
+
+    <hr>
+
+    <table class="company-clauses">
+        <tr>
+            <td rowspan="2" class="clausulas"> <strong>CLAUSULAS:</strong> <br>
+                <div class="clauses" id="company-clauses"></div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="company-horary">
+        <td style="text-align:center;">
+            <strong>Horario:</strong><br>
+            <span id="company-horary"></span>
+        </td>
+    </table>
+
+
+    <!-- <table class="totals-table">
         <tr>
             <td rowspan="2" class="clausulas">
                 <div class="clauses" id="company-clauses"></div>
@@ -70,7 +128,7 @@
                 <span id="company-horary"></span>
             </td>
         </tr>
-    </table>
+    </table> -->
 
     <table class="company-address">
         <tr>
